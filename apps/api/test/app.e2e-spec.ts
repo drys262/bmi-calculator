@@ -15,10 +15,20 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/calculate-bmi (POST)', () => {
+  it('/calculate-bmi - metric unit type (POST)', () => {
     return request(app.getHttpServer())
       .post('/calculate-bmi')
-      .send({ height: 165, weight: 85 })
+      .send({ height: 165, weight: 85, type: 'metric' })
+      .expect(201)
+      .expect({
+        bmi: '31.2',
+      });
+  });
+
+  it('/calculate-bmi - us unit type (POST)', () => {
+    return request(app.getHttpServer())
+      .post('/calculate-bmi')
+      .send({ height: 64.9606, weight: 187.393, type: 'us' })
       .expect(201)
       .expect({
         bmi: '31.2',

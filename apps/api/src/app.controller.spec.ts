@@ -15,8 +15,13 @@ describe('AppController', () => {
   });
 
   describe('Calculate BMI', () => {
-    it('should pass', () => {
-      const inputs = { height: 165, weight: 85 };
+    it('should pass (metric unit)', () => {
+      const inputs = { height: 165, weight: 85, type: 'metric' };
+      expect(appController.calculateBMI(inputs).bmi).toBe('31.2');
+    });
+
+    it('should pass (us unit)', () => {
+      const inputs = { height: 64.9606, weight: 187.393, type: 'us' };
       expect(appController.calculateBMI(inputs).bmi).toBe('31.2');
     });
   });

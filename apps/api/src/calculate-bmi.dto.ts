@@ -6,5 +6,5 @@ export class CalculateBmiDto {
   @IsNumber()
   weight: number;
   @IsString()
-  type: 'metric' | 'us';
+  type: string; // metric || us
 }
