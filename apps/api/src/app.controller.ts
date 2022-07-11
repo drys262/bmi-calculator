@@ -8,10 +8,20 @@ export class AppController {
 
   @Post('calculate-bmi')
   calculateBMI(@Body() calculateBmiDto: CalculateBmiDto) {
-    const bmi = this.appService.calculateBMI(
-      calculateBmiDto.height,
-      calculateBmiDto.weight,
-    );
+    const { type } = calculateBmiDto;
+    let bmi;
+
+    if (type === 'metric') {
+      bmi = this.appService.calculateBMIByMetricUnit(
+        calculateBmiDto.height,
+        calculateBmiDto.weight,
+      );
+    } else {
+      bmi = this.appService.calculateBMIByUSUnit(
+        calculateBmiDto.height,
+        calculateBmiDto.weight,
+      );
+    }
 
     return { bmi: bmi.toFixed(1) };
   }

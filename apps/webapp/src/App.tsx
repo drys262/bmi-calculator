@@ -3,7 +3,12 @@ import "./App.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useForm } from "react-hook-form";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
+import { useForm, Controller } from "react-hook-form";
 
 function App() {
   const {
@@ -11,6 +16,7 @@ function App() {
     handleSubmit,
     reset,
     formState: { errors },
+    control,
   } = useForm();
 
   const [bmi, setBmi] = useState(null);
@@ -25,6 +31,7 @@ function App() {
       body: JSON.stringify({
         height: Number(values.height),
         weight: Number(values.weight),
+        type: values.unitType,
       }),
     });
 
@@ -45,6 +52,21 @@ function App() {
               "& > :not(style)": { m: 1, width: "25ch" },
             }}
           >
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Unit Type</InputLabel>
+              <Controller
+                name="unitType"
+                control={control}
+                rules={{ required: "Unit Type is required" }}
+                render={({ field: { onChange, value } }) => (
+                  <Select value={value} label="Unit Type" onChange={onChange}>
+                    <MenuItem value={"metric"}>Metric</MenuItem>
+                    <MenuItem value={"us"}>US Units</MenuItem>
+                  </Select>
+                )}
+                defaultValue="metric"
+              />
+            </FormControl>
             <TextField
               type="number"
               id="height"
